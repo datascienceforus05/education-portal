@@ -1,7 +1,7 @@
 {
-  "name": "education-portal-backend",
+  "name": "shalom-edu-backend",
   "version": "1.0.0",
-  "description": "Backend for Shalom Education Portal",
+  "description": "Backend for Shalom EDU",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

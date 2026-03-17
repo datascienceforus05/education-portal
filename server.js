@@ -44,7 +44,7 @@ app.use("/api/chat", require("./routes/chat"));
 
 // Health check
 app.get("/api/health", (req, res) => {
-    res.json({ status: "OK", message: "Shalom Education Portal API Running" });
+    res.json({ status: "OK", message: "Shalom EDU API Running" });
 });
 
 // Socket.io connection
@@ -65,7 +65,7 @@ io.on("connection", (socket) => {
 mongoose
     .connect(process.env.MONGO_URI)
     .then(() => {
-        console.log("✅ MongoDB Connected: shalomEducationPortal");
+        console.log("✅ MongoDB Connected: shalomEDU");
         server.listen(process.env.PORT || 5000, () => {
             console.log(`🚀 Server running on port ${process.env.PORT || 5000}`);
         });
