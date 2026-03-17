@@ -22,7 +22,13 @@ const io = new Server(server, {
 app.set("io", io);
 
 // Middleware
-app.use(cors({ origin: ALLOWED_ORIGIN, credentials: true }));
+app.use(cors({ 
+    origin: (origin, callback) => {
+        // Allow all origins in development and production for now to fix deployment issues
+        callback(null, true);
+    }, 
+    credentials: true 
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
