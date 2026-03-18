@@ -3,6 +3,7 @@ const router = express.Router();
 const { createCourse, getCourses, getCourse, enrollCourse, updateCourse, getMyCourses } = require("../controllers/courseController");
 const { protect, restrictTo } = require("../middleware/auth");
 
+router.get("/public/all", getCourses); // Public route
 router.get("/", protect, getCourses);
 router.get("/my-courses", protect, getMyCourses);
 router.get("/:id", protect, getCourse);

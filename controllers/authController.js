@@ -8,7 +8,7 @@ const generateToken = (id) =>
 // @route POST /api/auth/register/student
 exports.registerStudent = async (req, res) => {
     try {
-        const { name, email, password, phone } = req.body;
+        const { name, email, password, phone, courseId } = req.body;
         if (!name || !email || !password)
             return res.status(400).json({ success: false, message: "All fields required" });
 
@@ -16,7 +16,22 @@ exports.registerStudent = async (req, res) => {
         if (exists)
             return res.status(409).json({ success: false, message: "Email already registered" });
 
-        const user = await User.create({ name, email, password, phone, role: "student", isApproved: true });
+        let enrolledCourses = [];
+        const Course = require("../models/Course"); // ensure Course is loaded
+
+        if (courseId) {
+            const course = await Course.findById(courseId);
+            if (course) {
+                enrolledCourses.push(course._id);
+            }
+        }
+
+        const user = await User.create({ name, email, password, phone, role: "student", isApproved: true, enrolledCourses });
+
+        if (enrolledCourses.length > 0) {
+            await Course.findByIdAndUpdate(courseId, { $push: { enrolledStudents: user._id } });
+        }
+
         const token = generateToken(user._id);
         res.status(201).json({ success: true, token, user });
     } catch (err) {
