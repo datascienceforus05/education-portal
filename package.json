@@ -1,7 +1,7 @@
 {
-  "name": "shalom-edu-backend",
+  "name": "collegemobi-edu-backend",
   "version": "1.0.0",
-  "description": "Backend for Shalom EDU",
+  "description": "Backend for CollegeMobi EDU",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

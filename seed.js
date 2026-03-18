@@ -24,7 +24,7 @@ const seedData = async () => {
         // 1. Create Admin
         const admin = await User.create({
             name: "Portal Admin",
-            email: "admin@onorg.com",
+            email: "admin@collegemobi.com",
             password: "Admin@123",
             role: "admin",
             isApproved: true,

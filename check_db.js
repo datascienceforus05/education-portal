@@ -5,7 +5,7 @@ const User = require("./models/User");
 
 async function checkData() {
     try {
-        await mongoose.connect("mongodb://127.0.0.1:27017/shalomEducationPortal"); // Assuming local mongo
+        await mongoose.connect("mongodb+srv://mebishnusahu_db_user:bishnu05@cluster0.ld1jlet.mongodb.net/?appName=Cluster0"); // Assuming local mongo
 
         console.log("Connected to DB");
 

@@ -182,7 +182,7 @@ exports.seedAdmin = async (req, res) => {
         if (adminExists) return res.status(400).json({ success: false, message: "Admin already exists" });
         const admin = await User.create({
             name: "Super Admin",
-            email: "admin@shalom.edu",
+            email: "admin@collegemobi.com",
             password: "Admin@123",
             role: "admin",
             isApproved: true,
