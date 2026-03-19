@@ -4,6 +4,7 @@ const { createCourse, getCourses, getCourse, enrollCourse, updateCourse, getMyCo
 const { protect, restrictTo } = require("../middleware/auth");
 
 router.get("/public/all", getCourses); // Public route
+router.get("/public/details/:id", getCourse); // Public route for details
 router.get("/", protect, getCourses);
 router.get("/my-courses", protect, getMyCourses);
 router.get("/:id", protect, getCourse);
