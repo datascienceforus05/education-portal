@@ -153,3 +153,16 @@ exports.changePassword = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+// @desc  Get all approved faculty (public)
+// @route GET /api/auth/faculty
+exports.getFacultyList = async (req, res) => {
+    try {
+        const User = require("../models/User"); // Ensure User model is accessible
+        const faculties = await User.find({ role: "faculty", isApproved: true })
+            .select("name avatar department bio qualification");
+        res.json({ success: true, faculties });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};

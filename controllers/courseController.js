@@ -6,10 +6,14 @@ const { createNotification } = require("./notificationController");
 // @route POST /api/courses
 exports.createCourse = async (req, res) => {
     try {
-        const { title, description, code, category, level, duration, price, tags } = req.body;
+        const { title, description, code, category, level, duration, price, tags, faculty: facultyId } = req.body;
+        
+        // Use specified faculty if admin, otherwise use logged-in user (faculty)
+        const finalFaculty = (req.user.role === "admin" && facultyId) ? facultyId : req.user.id;
+
         const course = await Course.create({
             title, description, code, category, level, duration, price, tags,
-            faculty: req.user.id,
+            faculty: finalFaculty,
         });
 
         // Notify all students about the new course
