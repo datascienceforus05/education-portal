@@ -193,3 +193,41 @@ exports.seedAdmin = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+exports.createUser = async (req, res) => {
+    try {
+        const { name, email, password, role, designation, bio, department } = req.body;
+        const User = require("../models/User");
+        const userExists = await User.findOne({ email });
+        if (userExists) return res.status(400).json({ success: false, message: "User already exists" });
+
+        const user = await User.create({
+            name, email, password, role, designation, bio, department,
+            isApproved: true,
+            isActive: true
+        });
+        res.status(201).json({ success: true, user });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+exports.updateUser = async (req, res) => {
+    try {
+        const User = require("../models/User");
+        if (req.body.password) {
+            const bcrypt = require("bcryptjs");
+            const salt = await bcrypt.genSalt(10);
+            req.body.password = await bcrypt.hash(req.body.password, salt);
+        } else {
+            delete req.body.password; // Do not overwrite if no password given
+        }
+        
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+        if (!user) return res.status(404).json({ success: false, message: "User not found" });
+
+        res.json({ success: true, user });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};

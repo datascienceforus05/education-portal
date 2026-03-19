@@ -130,3 +130,17 @@ exports.getMyCourses = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+exports.deleteCourse = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.id);
+        if (!course) return res.status(404).json({ success: false, message: "Course not found" });
+        if (course.faculty.toString() !== req.user.id && req.user.role !== "admin")
+            return res.status(403).json({ success: false, message: "Not authorized" });
+
+        await Course.findByIdAndDelete(req.params.id);
+        res.json({ success: true, message: "Course deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};

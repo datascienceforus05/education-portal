@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema(
         name: { type: String, required: true, trim: true },
         email: { type: String, required: true, unique: true, lowercase: true, trim: true },
         password: { type: String, required: true, minlength: 6 },
-        role: { type: String, enum: ["student", "faculty", "admin"], default: "student" },
+        role: { type: String, enum: ["student", "faculty", "admin", "board_member"], default: "student" },
         phone: { type: String, trim: true },
         avatar: { type: String, default: "" },
         isActive: { type: Boolean, default: true },
@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema(
         department: { type: String, trim: true },
         enrolledCourses: [{ type: mongoose.Schema.Types.ObjectId, ref: "Course" }],
         qualification: { type: String }, // For faculty
+        designation: { type: String }, // For board members
         bio: { type: String },
         lastLogin: { type: Date },
     },

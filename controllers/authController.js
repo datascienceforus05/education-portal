@@ -166,3 +166,16 @@ exports.getFacultyList = async (req, res) => {
         res.status(500).json({ success: false, message: err.message });
     }
 };
+
+// @desc  Get Board Members (public)
+// @route GET /api/auth/board
+exports.getBoardList = async (req, res) => {
+    try {
+        const User = require("../models/User");
+        const board = await User.find({ role: "board_member", isActive: true })
+            .select("name avatar designation bio");
+        res.json({ success: true, board });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
